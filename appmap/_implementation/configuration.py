@@ -22,13 +22,8 @@ def enabled():
 
 
 def split_method_name(method):
-    qualname = method.__qualname__
-    if '.' in qualname:
-        class_name, func_name = qualname.rsplit('.', 1)
-    else:
-        class_name = ''
-        func_name = qualname
-    return (class_name, func_name)
+    """ Split method __qualname__ into class_name, func_name """
+    return ([''] + method.__qualname__.rsplit('.', 1))[-2:]
 
 
 def wrap(func):
@@ -131,7 +126,7 @@ class BuiltinFilter(Filter):
 
     @classmethod
     def load_config(cls):
-        if not enabled:
+        if not enabled():
             return cls
 
         cls.includes = {'os.read', 'os.write'}
