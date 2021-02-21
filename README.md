@@ -140,8 +140,18 @@ appropriate remote recording support into your web app.
 ### Django
 `import appmap.django`. Adds `/_appmap/record` routes to a Django app.
 
-### Flask
-`import appmap.flask`. Adds `/_appmap/record` routes to a Flask app.
+## Flask
+```python
+from flask import Flask
+
+from appmap.flask import AppmapFlask
+
+app = Flask(__name__)
+
+appmap_flask = AppmapFlask(app)
+```
+
+Adds `/_appmap/record` routes to a Flask app.
 
 ### Run your web app
 Once you've configured your web app to add the remote-recording routes, you can use the

@@ -34,6 +34,12 @@ class Recording:
 
         self.events = Recorder().stop_recording()
 
+    def is_running(self):
+        if not env.enabled():
+            return False
+
+        return Recorder().enabled
+
     def __enter__(self):
         self.start()
 

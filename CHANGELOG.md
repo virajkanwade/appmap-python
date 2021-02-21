@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0.dev11] - 2021-02-28
 ### Added
 - [#5] *unittest* integration.
+- [#2] [#28] Add flask integration
 
 ### Fixed
 - [#50] Make sure we protect against rewrapping a metapath finder's exec_module function.
