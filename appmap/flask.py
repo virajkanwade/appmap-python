@@ -24,7 +24,7 @@ class AppmapFlask:
 
         self.record_url = '/_appmap/record'
 
-        print('in init_app')
+        # print('in init_app')
         app.add_url_rule(self.record_url, 'appmap_record_get', view_func=self.record_get, methods=['GET'])
         app.add_url_rule(self.record_url, 'appmap_record_post', view_func=self.record_post, methods=['POST'])
         app.add_url_rule(self.record_url, 'appmap_record_delete', view_func=self.record_delete, methods=['DELETE'])
