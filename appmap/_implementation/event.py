@@ -208,11 +208,12 @@ class SqlEvent(Event):
 class HttpRequestEvent(Event):
     __slots__ = ['http_server_request']
 
-    def __init__(self, request_method, path_info, protocol):
+    def __init__(self, request_method, path_info, normalized_path_info=None, protocol=None):
         super().__init__('call')
         self.http_server_request = {
             'request_method': request_method,
             'path_info': path_info,
+            'normalized_path_info': normalized_path_info,
             'protocol': protocol
         }
 

@@ -41,6 +41,7 @@ def test_http_capture(events):
     assert events[0].http_server_request == {
         'request_method': 'GET',
         'path_info': '/test',
+        'normalized_path_info': None,
         'protocol': 'HTTP/1.1'
     }
 
