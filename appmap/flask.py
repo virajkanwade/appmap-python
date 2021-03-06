@@ -4,7 +4,7 @@ import time
 # from werkzeug.wrappers import Request
 from flask import request, g
 
-from appmap._implementation import env
+from appmap._implementation.env import Env
 from appmap._implementation import generation
 from appmap._implementation.event import HttpRequestEvent, HttpResponseEvent
 from appmap._implementation.recording import Recorder, Recording
@@ -17,7 +17,7 @@ class AppmapFlask:
             self.init_app(app)
 
     def init_app(self, app):
-        if not env.enabled():
+        if not Env.current.enabled:
             return
 
         self.recording = Recording()

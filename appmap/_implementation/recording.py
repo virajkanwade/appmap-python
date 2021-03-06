@@ -35,7 +35,7 @@ class Recording:
         self.events = Recorder().stop_recording()
 
     def is_running(self):
-        if not env.enabled():
+        if not Env.current.enabled:
             return False
 
         return Recorder().enabled
