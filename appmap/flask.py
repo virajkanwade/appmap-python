@@ -1,8 +1,11 @@
 import json
+import os
 import time
 
+import click
+from flask import current_app, g, request
+from flask.cli import with_appcontext, run_command
 # from werkzeug.wrappers import Request
-from flask import request, g
 
 from appmap._implementation.env import Env
 from appmap._implementation import generation
@@ -11,7 +14,7 @@ from appmap._implementation.recording import Recorder, Recording
 
 
 class AppmapFlask:
-    def __init__(self, app):
+    def __init__(self, app=None):
         self.app = app
         if app is not None:
             self.init_app(app)
@@ -98,3 +101,20 @@ class AppmapFlask:
 #         print(request.url)
 #
 #         return self.app(environ, start_response)
+
+
+@click.command('appmap', short_help='Run a development server with appmap enabled')
+@click.pass_context
+@with_appcontext
+def appmap_command(ctx, *args, **kwargs):
+    # pylint: disable=unused-argument
+
+    os.environ['APPMAP'] = 'true'
+
+    appmap_flask = AppmapFlask()
+    appmap_flask.init_app(current_app)
+
+    ctx.invoke(run_command, **kwargs)
+
+
+appmap_command.params = run_command.params

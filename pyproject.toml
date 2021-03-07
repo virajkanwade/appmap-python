@@ -36,3 +36,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.plugins."pytest11"]
 appmap = "appmap.pytest"
+
+[tool.poetry.plugins."flask.commands"]
+appmap="appmap.flask:appmap_command"
