@@ -151,6 +151,12 @@ app = Flask(__name__)
 appmap_flask = AppmapFlask(app)
 ```
 
+*OR*
+
+```shell
+flask appmap
+```
+
 Adds `/_appmap/record` routes to a Flask app.
 
 ### Run your web app
