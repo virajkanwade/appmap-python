@@ -5,6 +5,7 @@ version = "0.0.0"
 description = "Create AppMap files by recording a Python application."
 readme = "README.md"
 authors = ["Alan Potter <alan@app.land>"]
+include = ['appmap.pth']
 
 [tool.poetry.dependencies]
 python = "^3.5"
@@ -36,6 +37,3 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.plugins."pytest11"]
 appmap = "appmap.pytest"
-
-[tool.poetry.plugins."flask.commands"]
-appmap="appmap.flask:appmap_command"

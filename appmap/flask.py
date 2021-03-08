@@ -1,11 +1,8 @@
+from functools import wraps
 import json
-import os
 import time
 
-import click
-from flask import current_app, g, request
-from flask.cli import with_appcontext, run_command
-# from werkzeug.wrappers import Request
+import flask.cli
 
 from appmap._implementation.env import Env
 from appmap._implementation import generation
@@ -103,18 +100,15 @@ class AppmapFlask:
 #         return self.app(environ, start_response)
 
 
-@click.command('appmap', short_help='Run a development server with appmap enabled')
-@click.pass_context
-@with_appcontext
-def appmap_command(ctx, *args, **kwargs):
-    # pylint: disable=unused-argument
-
-    os.environ['APPMAP'] = 'true'
-
-    appmap_flask = AppmapFlask()
-    appmap_flask.init_app(current_app)
-
-    ctx.invoke(run_command, **kwargs)
+def wrap_cli_fn(fn):
+    @wraps(fn)
+    def install_middleware(*args, **kwargs):
+        app = fn(*args, **kwargs)
+        appmap_flask = AppmapFlask()
+        appmap_flask.init_app(app)
+        return app
+    return install_middleware
 
 
-appmap_command.params = run_command.params
+flask.cli.call_factory = wrap_cli_fn(flask.cli.call_factory)
+flask.cli.locate_app = wrap_cli_fn(flask.cli.locate_app)
