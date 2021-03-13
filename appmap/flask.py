@@ -20,6 +20,9 @@ class AppmapFlask:
         if not Env.current.enabled:
             return
 
+        if not app:
+            return
+
         self.recording = Recording()
 
         self.record_url = '/_appmap/record'
@@ -104,11 +107,13 @@ def wrap_cli_fn(fn):
     @wraps(fn)
     def install_middleware(*args, **kwargs):
         app = fn(*args, **kwargs)
-        appmap_flask = AppmapFlask()
-        appmap_flask.init_app(app)
+        if app:
+            appmap_flask = AppmapFlask()
+            appmap_flask.init_app(app)
         return app
     return install_middleware
 
 
-flask.cli.call_factory = wrap_cli_fn(flask.cli.call_factory)
-flask.cli.locate_app = wrap_cli_fn(flask.cli.locate_app)
+if Env.current.enabled:
+    flask.cli.call_factory = wrap_cli_fn(flask.cli.call_factory)
+    flask.cli.locate_app = wrap_cli_fn(flask.cli.locate_app)
